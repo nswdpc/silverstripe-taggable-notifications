@@ -13,8 +13,10 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  */
 class UserDefinedFormControllerExtension extends Extension {
 
+    use Taggable;
+
     public function updateEmail( Email $email, EmailRecipient $recipient, array $emailData) {
-        $tags = $recipient->EmailTags()->column('Name');
+        $tags = $recipient->EmailTags()->sort('Name')->column('Name');
         if(empty($tags)) {
             // no tags
             return;
@@ -28,24 +30,42 @@ class UserDefinedFormControllerExtension extends Extension {
             // else, use standard email header handling
             $headerName = Config::inst()->get( ProjectTags::class, 'tag_email_header_name' );
             // ignore header if it is not prefixed X-, avoids stomping standard headers
-            if(stripos( $headerName, "X-") !== 0) {
+            if(!$headerName || stripos( $headerName, "X-") !== 0) {
                 return false;
             }
-            if($headerName) {
-                $delimiter = Config::inst()->get( ProjectTags::class, 'tag_email_header_value_delimiter' );
-                if(!$delimiter) {
-                    $delimiter = ",";
-                }
-                $serialiser = Config::inst()->get( ProjectTags::class, 'tag_email_header_serialisation' );
-                switch($serialiser) {
-                    case ProjectTags::HEADER_SERIALISATION_JSON:
-                        $headerValue = json_encode($tags);
-                        break;
-                    default:
-                        $headerValue = implode($delimiter, $tags);
-                        break;
-                }
-                $email->getSwiftMessage()->getHeaders()->addTextHeader($headerName,$headerValue);
+
+            // Process tags
+            $this->setNotificationTags( $tags );
+            $tags = $this->getNotificationTags();
+
+            $serialiser = Config::inst()->get( ProjectTags::class, 'tag_email_header_serialisation' );
+            switch($serialiser) {
+                case ProjectTags::HEADER_SERIALISATION_JSON:
+                    $email->getSwiftMessage()->getHeaders()->addTextHeader( $headerName, json_encode($tags) );
+                    break;
+                case ProjectTags::HEADER_SERIALISATION_CSV:
+                    // Get delimited or fall back to ,
+                    $delimiter = Config::inst()->get( ProjectTags::class, 'tag_email_header_value_delimiter' );
+                    if($delimiter === '') {
+                        $delimiter = ",";
+                    }
+                    $email->getSwiftMessage()->getHeaders()->addTextHeader( $headerName, implode($delimiter, $tags) );
+                    break;
+                default:
+                    // need to set a header with an index
+                    $factory = new \Swift_Mime_SimpleHeaderFactory(
+                        new \Swift_Mime_HeaderEncoder_Base64HeaderEncoder(),
+                        new \Swift_Encoder_Base64Encoder(),
+                        new \Swift_Mime_Grammar()
+                    );
+                    // each tag
+                    foreach($tags as $index => $tag) {
+                        // create a header
+                        $header = $factory->createTextHeader($headerName, $tag);
+                        // set at this index
+                        $email->getSwiftMessage()->getHeaders()->set($header, 'tag-header-' . $index);
+                    }
+                    break;
             }
         }
     }
