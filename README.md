@@ -11,12 +11,11 @@ Depending on the service used, message tags be be used for message analytics, bo
 - A Trait for notification clients to use
 - Userform extension to tag messages from a form, using `silverstripe/taxonomy`
 
-
 ## Requirements
 
 There are no special requirements for using this module beyond the composer requirements and the configuration required for your notification service.
 
-An example for Mailgun (SMTP) exists [in the documentation](./docs/en/001_index.md).
+Some examples and tips exist [in the documentation](./docs/en/001_index.md).
 
 ## User forms
 
