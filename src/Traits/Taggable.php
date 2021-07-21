@@ -19,26 +19,23 @@ trait Taggable {
      * Get tags used for this notification
      */
     public function getNotificationTags() : array {
-
-        // tags for this notification
-        $result = $this->notificationTags;
-
+        // tags
+        $tags = [];
         // a project tag, if configured
         if($projectTag = Config::inst()->get( ProjectTags::class, 'tag' )) {
-            $result[] = $projectTag;
+            $tags[] = $projectTag;
         }
-
+        // tags for this notification
+        $tags = array_merge($tags, $this->notificationTags);
         // get unique values
-        $result = array_unique($result);
-
+        $tags = array_unique($tags);
         // truncate based on tag limit
         $tagLimit = Config::inst()->get( ProjectTags::class, 'tag_limit' );
         if($tagLimit > 0) {
-            return array_slice($result, 0, $tagLimit);
+            return array_slice($tags, 0, $tagLimit);
         } else {
-            return $result;
+            return $tags;
         }
-
     }
 
     /**
