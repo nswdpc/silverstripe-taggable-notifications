@@ -12,8 +12,20 @@ class ProjectTags {
 
     use Configurable;
 
+    /**
+     * Tag values separated by a delimiter as configured
+     */
     const HEADER_SERIALISATION_CSV = 'csv';
+
+    /**
+     * Tag values are JSON encoded
+     */
     const HEADER_SERIALISATION_JSON = 'json';
+
+    /**
+     * One tag per header
+     */
+    const HEADER_SERIALISATION_MULTIHEADER = 'multi';
 
     /**
      * @var int
@@ -38,7 +50,7 @@ class ProjectTags {
      * @var string
      * How the tag values are serialised, if adding tags directly to email header
      */
-    private static $tag_email_header_serialisation = 'csv';
+    private static $tag_email_header_serialisation = 'multi';
 
     /**
      * @var string
