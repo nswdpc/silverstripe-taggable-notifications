@@ -1,0 +1,23 @@
+---
+Name: nswdpc-taggable-notifications
+---
+NSWDPC\Notifications\Taggable\ProjectTags:
+  tag: ''
+  tag_limit: 0
+  tag_email_header_name: ''
+  tag_email_header_serialisation: 'csv'
+  tag_email_header_value_delimiter: ','
+---
+Name: nswdpc-taggable-notifications-userforms
+Only:
+  moduleexists: 'silverstripe/userforms'
+---
+SilverStripe\UserForms\Control\UserDefinedFormController:
+  extensions:
+    - 'NSWDPC\Notifications\Taggable\UserDefinedFormControllerExtension'
+SilverStripe\UserForms\Model\Recipient\EmailRecipient:
+  extensions:
+    - 'NSWDPC\Notifications\Taggable\UserFormEmailRecipientExtension'
+SilverStripe\Taxonomy\TaxonomyTerm:
+  extensions:
+    - 'NSWDPC\Notifications\Taggable\UserFormEmailTagsExtension'
