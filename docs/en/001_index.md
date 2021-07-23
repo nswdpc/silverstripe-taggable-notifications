@@ -20,7 +20,7 @@ Name: 'app-taggable-notifications'
 After:
   - '#nswdpc-taggable-notifications'
 ---
-NSWDPC\Notifications\Taggable\ProjectTags:
+NSWDPC\Messaging\Taggable\ProjectTags:
   # tag every message with this tag
   tag: 'my-app'
   # a tag limit of 10 exists
@@ -50,7 +50,7 @@ Name: 'app-taggable-notifications'
 After:
   - '#nswdpc-taggable-notifications'
 ---
-NSWDPC\Notifications\Taggable\ProjectTags:
+NSWDPC\Messaging\Taggable\ProjectTags:
   # API and SMTP transport configuration
   tag: ''
   tag_limit: 3

@@ -15,17 +15,27 @@ Depending on the service used, message tags be be used for message analytics, bo
 
 There are no special requirements for using this module beyond the composer requirements and the configuration required for your notification service.
 
-Some examples and tips exist [in the documentation](./docs/en/001_index.md).
+To set tags on a notification that uses the Taggable trait:
+
+```php
+$tags = ['tag1','tag2','tag3'];
+$notifier->setNotificationTags( $tags );
+```
+
+For the core `Email` class, [configuration in the module](./_config/config.yml) sets `TaggableEmail` as the Email class, via Injector.
+
+```php
+$email = Injector::inst()->get( Email::class );
+$email->setNotificationTags( $tags );
+```
+
+TaggableEmail will set headers on the `Swift_Message` based on your configuration.
+
+If your project uses a different email provider that supports tagging, it just needs to use the Taggable trait. Some examples exist [in the documentation](./docs/en/001_index.md).
 
 ## User forms
 
 If your project uses userforms, each Email recipient will get a tag field allowing per-recipient message tagging.
-
-## Taggable
-
-Notification services that use the `Taggable` trait should use `setNotificationTags` and `getNotificationTags` to get and set message tags, respectively.
-
-If your message service restricts the number of tags per message, this is handled by the Taggable trait. Tags are reduced to the number specified in configuration, with the remainder discarded.
 
 ## Installation
 
@@ -43,7 +53,7 @@ composer require silverstripe-taggable-notifications
 
 ## Configuration
 
-Add project level tags. These are added to all notifications sent by the service.
+Add a project level tag. If provided, this is added to all notifications sent by the service.
 
 ```yaml
 ---
@@ -51,11 +61,8 @@ Name: app-notification-tagging
 After:
   - '#nswdpc-taggable-notifications'
 ---
-NSWDPC\Notifications\Taggable\ProjectTags:
- tags:
-   - 'a-project-tag'
-   - 'site name'
-   - 'site version'
+NSWDPC\Messaging\Taggable\ProjectTags:
+ tag: 'a-project-tag'
 ```
 
 ## Maintainers

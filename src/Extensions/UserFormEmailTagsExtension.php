@@ -1,6 +1,6 @@
 <?php
 
-namespace NSWDPC\Notifications\Taggable;
+namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Taxonomy\TaxonomyTerm;

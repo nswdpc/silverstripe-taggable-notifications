@@ -17,6 +17,16 @@
             "role": "Developer"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Messaging\\Taggable\\": [
+                "src/"
+            ],
+            "NSWDPC\\Messaging\\Taggable\\Tests": [
+                "tests/"
+            ]
+        }
+    },
     "require": {
         "silverstripe/tagfield" : "^2",
         "silverstripe/taxonomy" : "^2"

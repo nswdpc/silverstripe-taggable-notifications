@@ -1,12 +1,20 @@
 ---
 Name: nswdpc-taggable-notifications
 ---
-NSWDPC\Notifications\Taggable\ProjectTags:
+NSWDPC\Messaging\Taggable\ProjectTags:
   tag: ''
   tag_limit: 0
   tag_email_header_name: ''
   tag_email_header_serialisation: 'csv'
   tag_email_header_value_delimiter: ','
+---
+Name: nswdpc-taggable-email
+After:
+  - '#emailconfig'
+# Use TaggableEmail as the email class
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Email\Email:
+    class: 'NSWDPC\Messaging\Taggable\TaggableEmail'
 ---
 Name: nswdpc-taggable-notifications-userforms
 Only:
@@ -14,10 +22,10 @@ Only:
 ---
 SilverStripe\UserForms\Control\UserDefinedFormController:
   extensions:
-    - 'NSWDPC\Notifications\Taggable\UserDefinedFormControllerExtension'
+    - 'NSWDPC\Messaging\Taggable\UserDefinedFormControllerExtension'
 SilverStripe\UserForms\Model\Recipient\EmailRecipient:
   extensions:
-    - 'NSWDPC\Notifications\Taggable\UserFormEmailRecipientExtension'
+    - 'NSWDPC\Messaging\Taggable\UserFormEmailRecipientExtension'
 SilverStripe\Taxonomy\TaxonomyTerm:
   extensions:
-    - 'NSWDPC\Notifications\Taggable\UserFormEmailTagsExtension'
+    - 'NSWDPC\Messaging\Taggable\UserFormEmailTagsExtension'
