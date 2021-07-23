@@ -11,6 +11,7 @@ NSWDPC\Messaging\Taggable\ProjectTags:
 Name: nswdpc-taggable-email
 After:
   - '#emailconfig'
+---
 # Use TaggableEmail as the email class
 SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Email\Email:
