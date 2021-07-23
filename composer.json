@@ -22,7 +22,7 @@
             "NSWDPC\\Messaging\\Taggable\\": [
                 "src/"
             ],
-            "NSWDPC\\Messaging\\Taggable\\Tests": [
+            "NSWDPC\\Messaging\\Taggable\\Tests\\": [
                 "tests/"
             ]
         }
