@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Messaging\Taggable;
 
+use Egulias\EmailValidator\EmailValidator;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Control\Email\Email;
 
@@ -54,7 +55,7 @@ class TaggableEmail extends Email {
                 $factory = new \Swift_Mime_SimpleHeaderFactory(
                     new \Swift_Mime_HeaderEncoder_Base64HeaderEncoder(),
                     new \Swift_Encoder_Base64Encoder(),
-                    new \Swift_Mime_Grammar()
+                    new EmailValidator()
                 );
                 // each tag
                 foreach($tags as $index => $tag) {
