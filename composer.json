@@ -28,6 +28,7 @@
         }
     },
     "require": {
+        "silverstripe/framework" : ">=4.6 <4.9",
         "silverstripe/tagfield" : "^2",
         "silverstripe/taxonomy" : "^2"
     },
