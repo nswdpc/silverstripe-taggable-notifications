@@ -16,17 +16,24 @@ class TaggableEmail extends Email {
     }
 
     /**
-     * Set tag headers on the email message
+     * Set tag headers on the email message, based on project configuration
+     * Classing this method will set tags as headers on the SwiftMessage
      * @return self
      */
     public function setNotificationTags(array $tags) {
 
         $this->setTaggableNotificationTags( $tags );
 
-        // ignore header if empty or
-        // if it is not prefixed X-, avoids stomping standard headers
+        // If there is no header provided, then tags aren't handled by email headers
+        // The Mailer should handle tags set on this message
         $headerName = Config::inst()->get( ProjectTags::class, 'tag_email_header_name' );
-        if(!$headerName || stripos( $headerName, "X-") !== 0) {
+        if(!$headerName) {
+            return $this;
+        }
+
+        // The header configured must be X- prefixe
+        // avoids stomping standard headers
+        if(stripos( $headerName, "X-") !== 0) {
             return $this;
         }
 
