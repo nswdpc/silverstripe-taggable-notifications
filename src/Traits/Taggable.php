@@ -17,6 +17,11 @@ trait Taggable {
 
     /**
      * Get tags used for this notification
+     * When retrieving tags, the return tags are all or a subset of the provided
+     * tags, depending your project configuration tag_limit
+     * A project based tag is added as the first tag, if provided
+     * No other processing is completed on your tags
+     * @return array
      */
     public function getNotificationTags() : array {
         // tags
