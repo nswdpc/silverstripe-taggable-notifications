@@ -9,13 +9,8 @@ NSWDPC\Messaging\Taggable\ProjectTags:
   tag_email_header_value_delimiter: ','
 ---
 Name: nswdpc-taggable-email
-After:
-  - '#emailconfig'
 ---
-# Use TaggableEmail as the email class
-SilverStripe\Core\Injector\Injector:
-  SilverStripe\Control\Email\Email:
-    class: 'NSWDPC\Messaging\Taggable\TaggableEmail'
+# Note: set the Email configuration at the project level
 ---
 Name: nswdpc-taggable-notifications-userforms
 Only:
