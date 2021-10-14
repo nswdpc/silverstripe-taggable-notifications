@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Messaging\Taggable;
 
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 use SilverStripe\Taxonomy\TaxonomyType;
@@ -45,6 +46,13 @@ class UserFormEmailTagsExtension extends DataExtension {
                     ->filter( ['TypeID' => $type->ID ] )
                     ->sort('Name ASC');
         return $terms;
+    }
+
+    /**
+     * Do not show the Recipients tab in Taxonomy admin
+     */
+    public function updateCMSFields(FieldList $fields) {
+        $fields->removeByName('Recipients');
     }
 
 }
