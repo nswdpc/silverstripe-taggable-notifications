@@ -47,12 +47,4 @@ class UserFormEmailTagsExtension extends DataExtension {
         return $terms;
     }
 
-    /**
-     * Assign type on write
-     */
-    public function onBeforeWrite() {
-        $type = $this->findOrMakeNotificationType();
-        $this->owner->TypeID = $type->ID;
-    }
-
 }
