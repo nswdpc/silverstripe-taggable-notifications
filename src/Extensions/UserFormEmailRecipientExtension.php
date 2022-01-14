@@ -44,6 +44,21 @@ class UserFormEmailRecipientExtension extends DataExtension {
     }
 
     /**
+     * EmailRecipient post-write operations
+     */
+    public function onAfterWrite() {
+        parent::onAfterWrite();
+        // After write, ensure terms associated are linked to the correct type
+        if($terms = $this->owner->EmailTags()) {
+            $type = NotificationTags::findOrMakeType();
+            foreach($terms as $term) {
+                $term->TypeID = $type->ID;
+                $term->write();
+            }
+        }
+    }
+
+    /**
      * Add tag field to Email recipient
      * @param Fieldlist
      */
@@ -52,32 +67,32 @@ class UserFormEmailRecipientExtension extends DataExtension {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
         $tag = trim(strip_tags(Config::inst()->get(ProjectTags::class, 'tag')));
 
-        $description = "";
         if($limit > 0) {
             if($tag) {
                 $limit--;
-                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', '{limit} tag(s) are allowed, in addition to the system tag <code>{tag}</code>', ['limit' => $limit, 'tag' => $tag] );
+                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', '{limit} tag(s) are allowed, in addition to the system tag <code>{tag}</code>.', ['limit' => $limit, 'tag' => $tag] );
             } else {
-                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', 'The tag limit is {limit}', ['limit' => $limit] );
+                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', 'The tag limit is {limit}.', ['limit' => $limit] );
             }
         }
 
-        // Use a configured type name
-        $terms = TaxonomyTerm::create()->getNotificationTags();
+        // TagField
+        $availableTerms = NotificationTags::getAvailableTerms();
+        // check if member can create tags
+        $canCreate = TaxonomyTerm::create()->canCreate();
+        $tagField = $tagField->setDescription( $description );
         $fields->addFieldToTab(
             'Root.EmailDetails',
             TagField::create(
-              'EmailTags',
-              _t('Taggable.EMAIL_TAGS','Email tags'),
-              $terms->map('ID','Name'), // allowed terms
-              $this->owner->EmailTags(), // current terms
-              'Name' // title field: TaxonomyTerm.Name
-            )->setCanCreate(true)
+                'EmailTags',
+                _t('Taggable.EMAIL_TAGS','Email tags'),
+                $availableTerms, // available terms
+                $this->owner->EmailTags(), // current terms
+                'Name' // title field: TaxonomyTerm.Name
+            )->setCanCreate( $canCreate )
             ->setShouldLazyLoad(true)
             ->setIsMultiple(true)
-            ->setSourceList( $terms ) // limit source list to this
             ->setLazyLoadItemLimit(null)
-            ->setDescription( $description )
         );
 
     }

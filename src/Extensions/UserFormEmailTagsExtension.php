@@ -24,28 +24,19 @@ class UserFormEmailTagsExtension extends DataExtension {
     ];
 
     /**
-     * Find or make the parent taxonomy type for notification tags
+     * Retained for BC
+     * @deprecated
      */
-    public function findOrMakeNotificationType() : TaxonomyType {
-        $typeName = _t('Taggable.NOTIFICATION_TERM_TYPE', 'Notification Tags');
-        $record = ['Name' => $typeName ];
-        $type = TaxonomyType::get()->filter( $record )->first();
-        if(!$type || !$type->isInDB()) {
-            $type = TaxonomyType::create($record);
-            $type->write();
-        }
-        return $type;
+    public static function findOrMakeNotificationType() : TaxonomyType {
+        return NotificationTags::findOrMakeType();
     }
 
     /**
-     * Returns a map of Taxonomy terms under the configured notification type
+     * Retained for BC
+     * @deprecated
      */
     public function getNotificationTags() {
-        $type = $this->owner->findOrMakeNotificationType();
-        $terms = TaxonomyTerm::get()
-                    ->filter( ['TypeID' => $type->ID ] )
-                    ->sort('Name ASC');
-        return $terms;
+        return NotificationTags::getAvailableTerms();
     }
 
     /**
