@@ -80,7 +80,6 @@ class UserFormEmailRecipientExtension extends DataExtension {
         $availableTerms = NotificationTags::getAvailableTerms();
         // check if member can create tags
         $canCreate = TaxonomyTerm::create()->canCreate();
-        $tagField = $tagField->setDescription( $description );
         $fields->addFieldToTab(
             'Root.EmailDetails',
             TagField::create(
@@ -93,6 +92,7 @@ class UserFormEmailRecipientExtension extends DataExtension {
             ->setShouldLazyLoad(true)
             ->setIsMultiple(true)
             ->setLazyLoadItemLimit(null)
+            ->setDescription( $description )
         );
 
     }
