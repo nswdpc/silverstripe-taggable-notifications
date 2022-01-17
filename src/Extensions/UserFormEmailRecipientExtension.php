@@ -27,9 +27,10 @@ class UserFormEmailRecipientExtension extends DataExtension {
      * Render terms used into a string
      */
     public function EmailTagsNice() : string {
-        $tags = $this->owner->EmailTags()->column('Name');
-        if(is_array($tags) && !empty($tags)) {
-            $terms = implode(", ", $tags);
+        $tags = $this->owner->EmailTags()->sort('Name');
+        $availableTags = NotificationTags::filterTermsByAvailable($tags);
+        if(is_array($availableTags) && !empty($availableTags)) {
+            $terms = implode(", ", $availableTags);
         } else {
             $terms = "";
         }
@@ -86,7 +87,7 @@ class UserFormEmailRecipientExtension extends DataExtension {
                 'EmailTags',
                 _t('Taggable.EMAIL_TAGS','Email tags'),
                 $availableTerms, // available terms
-                $this->owner->EmailTags(), // current terms
+                $this->owner->EmailTags()->sort('Name'), // current terms
                 'Name' // title field: TaxonomyTerm.Name
             )->setCanCreate( $canCreate )
             ->setShouldLazyLoad(true)
