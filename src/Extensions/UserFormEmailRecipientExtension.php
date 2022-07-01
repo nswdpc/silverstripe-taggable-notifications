@@ -67,6 +67,7 @@ class UserFormEmailRecipientExtension extends DataExtension {
 
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
         $tag = trim(strip_tags(Config::inst()->get(ProjectTags::class, 'tag')));
+        $description = "";
 
         if($limit > 0) {
             if($tag) {
