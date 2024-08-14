@@ -19,6 +19,7 @@ class UserDefinedFormControllerExtension extends Extension
      */
     public function updateEmail(Email $email, EmailRecipient $recipient, array $emailData)
     {
+        // @phpstan-ignore method.notFound
         $tags = $recipient->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
         if ($availableTags === []) {
