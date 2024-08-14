@@ -26,6 +26,7 @@ class UserDefinedFormControllerExtension extends Extension
             return;
         }
         // set tags and headers
+        /** @var \NSWDPC\Messaging\Taggable\TaggableEmail $email */
         $email->setNotificationTags($availableTags);
     }
 }

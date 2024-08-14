@@ -3,7 +3,7 @@
 namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Forms\Fieldlist;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\TagField\TagField;
 use SilverStripe\Taxonomy\TaxonomyTerm;
@@ -39,7 +39,7 @@ class UserFormEmailRecipientExtension extends DataExtension
     }
 
     /**
-     * @var array
+     * @inheritdoc
      */
     public function updateSummaryFields(&$fields)
     {
@@ -64,9 +64,9 @@ class UserFormEmailRecipientExtension extends DataExtension
 
     /**
      * Add tag field to Email recipient
-     * @param Fieldlist
+     * @param FieldList $fields
      */
-    public function updateCmsFields(Fieldlist $fields)
+    public function updateCmsFields(FieldList $fields)
     {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
         $tag = trim(strip_tags(Config::inst()->get(ProjectTags::class, 'tag')));
@@ -96,7 +96,6 @@ class UserFormEmailRecipientExtension extends DataExtension
             )->setCanCreate($canCreate)
             ->setShouldLazyLoad(true)
             ->setIsMultiple(true)
-            ->setLazyLoadItemLimit(null)
             ->setDescription($description)
         );
     }

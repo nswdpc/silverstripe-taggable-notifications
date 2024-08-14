@@ -15,7 +15,6 @@ class NotificationTags
 {
     /**
      * Find or make the parent taxonomy type for notification tags
-     * @return SilverStripe\Taxonomy\TaxonomyType
      */
     public static function findOrMakeType(): TaxonomyType
     {
@@ -31,7 +30,6 @@ class NotificationTags
 
     /**
      * Returns a map of Taxonomy terms under the configured notification type
-     * @return DataList
      */
     public static function getAvailableTerms(): DataList
     {
@@ -44,7 +42,7 @@ class NotificationTags
 
     /**
      * Given a list of TaxonomyTerm records, filter them by the Terms that are available as notification terms
-     * @param SilverStripe\ORM\DataList|SilverStripe\ORM\UnsavedRelationList
+     * @param \SilverStripe\ORM\DataList|\SilverStripe\ORM\UnsavedRelationList $terms
      */
     public static function filterTermsByAvailable(SS_List $terms): array
     {
