@@ -4,5 +4,6 @@
 /.php-cs-fixer.cache
 /public/
 /resources/
+/assets/
 /composer.lock
 node_modules
