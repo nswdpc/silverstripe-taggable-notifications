@@ -69,7 +69,7 @@ class TaggableEmail extends Email
                     // create a header
                     $header = $factory->createTextHeader($headerName, $tag);
                     // set at this index
-                    $this->getSwiftMessage()->getHeaders()->set($header, 'tag-header-' . $index);
+                    $this->getSwiftMessage()->getHeaders()->set($header, $index);
                 }
                 break;
         }
