@@ -8,8 +8,8 @@ use SilverStripe\Core\Config\Config;
  * Taggable trait for notification handling
  * @author James
  */
-trait Taggable {
-
+trait Taggable
+{
     /**
      * @var array
      */
@@ -23,11 +23,12 @@ trait Taggable {
      * No other processing is completed on your tags
      * @return array
      */
-    public function getNotificationTags() : array {
+    public function getNotificationTags(): array
+    {
         // tags
         $tags = [];
         // a project tag, if configured
-        if($projectTag = Config::inst()->get( ProjectTags::class, 'tag' )) {
+        if ($projectTag = Config::inst()->get(ProjectTags::class, 'tag')) {
             $tags[] = $projectTag;
         }
         // tags for this notification
@@ -35,8 +36,8 @@ trait Taggable {
         // get unique values
         $tags = array_unique($tags);
         // truncate based on tag limit
-        $tagLimit = Config::inst()->get( ProjectTags::class, 'tag_limit' );
-        if($tagLimit > 0) {
+        $tagLimit = Config::inst()->get(ProjectTags::class, 'tag_limit');
+        if ($tagLimit > 0) {
             return array_slice($tags, 0, $tagLimit);
         } else {
             return $tags;
@@ -47,7 +48,8 @@ trait Taggable {
      * Set tags used for this notification
      * @param array $tags
      */
-    public function setNotificationTags(array $tags) {
+    public function setNotificationTags(array $tags)
+    {
         $this->notificationTags = $tags;
         return $this;
     }

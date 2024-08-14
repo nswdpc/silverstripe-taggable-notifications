@@ -14,8 +14,8 @@ use SilverStripe\Taxonomy\TaxonomyType;
  * Each tag is a link to a {@link SilverStripe\Taxonomy\TaxonomyTerm} record
  * @author James
  */
-class UserFormEmailRecipientExtension extends DataExtension {
-
+class UserFormEmailRecipientExtension extends DataExtension
+{
     /**
      * @var array
      */
@@ -26,10 +26,11 @@ class UserFormEmailRecipientExtension extends DataExtension {
     /**
      * Render terms used into a string
      */
-    public function EmailTagsNice() : string {
+    public function EmailTagsNice(): string
+    {
         $tags = $this->owner->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
-        if(is_array($availableTags) && !empty($availableTags)) {
+        if (is_array($availableTags) && !empty($availableTags)) {
             $terms = implode(", ", $availableTags);
         } else {
             $terms = "";
@@ -40,19 +41,21 @@ class UserFormEmailRecipientExtension extends DataExtension {
     /**
      * @var array
      */
-    public function updateSummaryFields(&$fields) {
-        $fields['EmailTagsNice'] = _t('Taggable.EMAIL_TAGS','Email tags');
+    public function updateSummaryFields(&$fields)
+    {
+        $fields['EmailTagsNice'] = _t('Taggable.EMAIL_TAGS', 'Email tags');
     }
 
     /**
      * EmailRecipient post-write operations
      */
-    public function onAfterWrite() {
+    public function onAfterWrite()
+    {
         parent::onAfterWrite();
         // After write, ensure terms associated are linked to the correct type
-        if($terms = $this->owner->EmailTags()) {
+        if ($terms = $this->owner->EmailTags()) {
             $type = NotificationTags::findOrMakeType();
-            foreach($terms as $term) {
+            foreach ($terms as $term) {
                 $term->TypeID = $type->ID;
                 $term->write();
             }
@@ -63,18 +66,18 @@ class UserFormEmailRecipientExtension extends DataExtension {
      * Add tag field to Email recipient
      * @param Fieldlist
      */
-    public function updateCmsFields(Fieldlist $fields) {
-
+    public function updateCmsFields(Fieldlist $fields)
+    {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
         $tag = trim(strip_tags(Config::inst()->get(ProjectTags::class, 'tag')));
         $description = "";
 
-        if($limit > 0) {
-            if($tag) {
+        if ($limit > 0) {
+            if ($tag) {
                 $limit--;
-                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', '{limit} tag(s) are allowed, in addition to the system tag <code>{tag}</code>.', ['limit' => $limit, 'tag' => $tag] );
+                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', '{limit} tag(s) are allowed, in addition to the system tag <code>{tag}</code>.', ['limit' => $limit, 'tag' => $tag]);
             } else {
-                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', 'The tag limit is {limit}.', ['limit' => $limit] );
+                $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', 'The tag limit is {limit}.', ['limit' => $limit]);
             }
         }
 
@@ -86,17 +89,15 @@ class UserFormEmailRecipientExtension extends DataExtension {
             'Root.EmailDetails',
             TagField::create(
                 'EmailTags',
-                _t('Taggable.EMAIL_TAGS','Email tags'),
+                _t('Taggable.EMAIL_TAGS', 'Email tags'),
                 $availableTerms, // available terms
                 $this->owner->EmailTags()->sort('Name'), // current terms
                 'Name' // title field: TaxonomyTerm.Name
-            )->setCanCreate( $canCreate )
+            )->setCanCreate($canCreate)
             ->setShouldLazyLoad(true)
             ->setIsMultiple(true)
             ->setLazyLoadItemLimit(null)
-            ->setDescription( $description )
+            ->setDescription($description)
         );
-
     }
-
 }

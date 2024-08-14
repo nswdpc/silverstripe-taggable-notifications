@@ -11,17 +11,18 @@ use SilverStripe\Taxonomy\TaxonomyType;
  * Notification tag model
  * @author James
  */
-class NotificationTags {
-
+class NotificationTags
+{
     /**
      * Find or make the parent taxonomy type for notification tags
      * @return SilverStripe\Taxonomy\TaxonomyType
      */
-    public static function findOrMakeType() : TaxonomyType {
+    public static function findOrMakeType(): TaxonomyType
+    {
         $typeName = _t('Taggable.NOTIFICATION_TERM_TYPE', 'Notification Tags');
         $record = ['Name' => $typeName ];
-        $type = TaxonomyType::get()->filter( $record )->first();
-        if(!$type || !$type->isInDB()) {
+        $type = TaxonomyType::get()->filter($record)->first();
+        if (!$type || !$type->isInDB()) {
             $type = TaxonomyType::create($record);
             $type->write();
         }
@@ -32,10 +33,11 @@ class NotificationTags {
      * Returns a map of Taxonomy terms under the configured notification type
      * @return DataList
      */
-    public static function getAvailableTerms() : DataList {
+    public static function getAvailableTerms(): DataList
+    {
         $type = self::findOrMakeType();
         $terms = TaxonomyTerm::get()
-                    ->filter( ['TypeID' => $type->ID ] )
+                    ->filter(['TypeID' => $type->ID ])
                     ->sort('Name ASC');
         return $terms;
     }
@@ -44,12 +46,13 @@ class NotificationTags {
      * Given a list of TaxonomyTerm records, filter them by the Terms that are available as notification terms
      * @param SilverStripe\ORM\DataList|SilverStripe\ORM\UnsavedRelationList
      */
-    public static function filterTermsByAvailable(SS_List $terms) : array {
-        if($terms->count() == 0) {
+    public static function filterTermsByAvailable(SS_List $terms): array
+    {
+        if ($terms->count() == 0) {
             return [];
         }
         $availableTerms = self::getAvailableTerms();
-        if($availableTerms->count() > 0) {
+        if ($availableTerms->count() > 0) {
             // filter on these term(s)
             $terms = $terms->filter('ID', $availableTerms->column('ID'));
             $terms = $terms->column('Name');
@@ -59,5 +62,4 @@ class NotificationTags {
         }
         return $terms;
     }
-
 }

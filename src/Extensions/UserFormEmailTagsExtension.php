@@ -14,8 +14,8 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * one configured {@link SilverStripe\Taxonomy\TaxonomyType}
  * @author James
  */
-class UserFormEmailTagsExtension extends DataExtension {
-
+class UserFormEmailTagsExtension extends DataExtension
+{
     /**
      * @var array
      */
@@ -27,7 +27,8 @@ class UserFormEmailTagsExtension extends DataExtension {
      * Retained for BC
      * @deprecated
      */
-    public static function findOrMakeNotificationType() : TaxonomyType {
+    public static function findOrMakeNotificationType(): TaxonomyType
+    {
         return NotificationTags::findOrMakeType();
     }
 
@@ -35,15 +36,16 @@ class UserFormEmailTagsExtension extends DataExtension {
      * Retained for BC
      * @deprecated
      */
-    public function getNotificationTags() {
+    public function getNotificationTags()
+    {
         return NotificationTags::getAvailableTerms();
     }
 
     /**
      * Do not show the Recipients tab in Taxonomy admin
      */
-    public function updateCMSFields(FieldList $fields) {
+    public function updateCMSFields(FieldList $fields)
+    {
         $fields->removeByName('Recipients');
     }
-
 }
