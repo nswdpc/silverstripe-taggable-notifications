@@ -21,10 +21,11 @@ class UserDefinedFormControllerExtension extends Extension
     {
         $tags = $recipient->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
-        if (empty($availableTags)) {
+        if ($availableTags === []) {
             // no tags
             return;
         }
+
         // set tags and headers
         /** @var \NSWDPC\Messaging\Taggable\TaggableEmail $email */
         $email->setNotificationTags($availableTags);

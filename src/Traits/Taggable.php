@@ -21,7 +21,6 @@ trait Taggable
      * tags, depending your project configuration tag_limit
      * A project based tag is added as the first tag, if provided
      * No other processing is completed on your tags
-     * @return array
      */
     public function getNotificationTags(): array
     {
@@ -31,6 +30,7 @@ trait Taggable
         if ($projectTag = Config::inst()->get(ProjectTags::class, 'tag')) {
             $tags[] = $projectTag;
         }
+
         // tags for this notification
         $tags = array_merge($tags, $this->notificationTags);
         // get unique values
@@ -46,7 +46,6 @@ trait Taggable
 
     /**
      * Set tags used for this notification
-     * @param array $tags
      */
     public function setNotificationTags(array $tags)
     {

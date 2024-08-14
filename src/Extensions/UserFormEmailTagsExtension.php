@@ -16,10 +16,7 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  */
 class UserFormEmailTagsExtension extends DataExtension
 {
-    /**
-     * @var array
-     */
-    private static $belongs_many_many = [
+    private static array $belongs_many_many = [
         'Recipients' => EmailRecipient::class,
     ];
 
@@ -36,7 +33,7 @@ class UserFormEmailTagsExtension extends DataExtension
      * Retained for BC
      * @deprecated
      */
-    public function getNotificationTags()
+    public function getNotificationTags(): \SilverStripe\ORM\DataList
     {
         return NotificationTags::getAvailableTerms();
     }

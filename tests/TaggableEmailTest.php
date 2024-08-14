@@ -12,7 +12,7 @@ use SilverStripe\Dev\SapphireTest;
  */
 class TaggableEmailTest extends SapphireTest
 {
-    public function testSetNotificationTags()
+    public function testSetNotificationTags(): void
     {
         $headerName = 'X-Tag-Testing';
 
@@ -57,7 +57,7 @@ class TaggableEmailTest extends SapphireTest
         }
     }
 
-    public function testTagLimit()
+    public function testTagLimit(): void
     {
         $headerName = 'X-Tag-Testing';
         $tagLimit = 2;
@@ -103,7 +103,7 @@ class TaggableEmailTest extends SapphireTest
         }
     }
 
-    public function testJsonSerialisedTags()
+    public function testJsonSerialisedTags(): void
     {
         $headerName = 'X-Tag-Testing';
 
@@ -142,10 +142,10 @@ class TaggableEmailTest extends SapphireTest
         $this->assertTrue($headers->has($headerName));
         $header = $headers->get($headerName);
 
-        $this->assertEquals(count($tags), count(json_decode($header->getValue())));
+        $this->assertEquals(count($tags), count(json_decode((string) $header->getValue())));
     }
 
-    public function testCsvSerialisedTags()
+    public function testCsvSerialisedTags(): void
     {
         $headerName = 'X-Tag-Testing';
 
@@ -184,10 +184,10 @@ class TaggableEmailTest extends SapphireTest
         $this->assertTrue($headers->has($headerName));
         $header = $headers->get($headerName);
 
-        $this->assertEquals(count($tags), count(explode(",", $header->getValue())));
+        $this->assertEquals(count($tags), count(explode(",", (string) $header->getValue())));
     }
 
-    public function testProjectNotificationTags()
+    public function testProjectNotificationTags(): void
     {
         $headerName = 'X-Tag-Testing';
         $projectTag = 'test project tag';

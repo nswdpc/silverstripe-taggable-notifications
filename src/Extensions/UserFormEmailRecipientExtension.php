@@ -16,10 +16,7 @@ use SilverStripe\Taxonomy\TaxonomyType;
  */
 class UserFormEmailRecipientExtension extends DataExtension
 {
-    /**
-     * @var array
-     */
-    private static $many_many = [
+    private static array $many_many = [
         'EmailTags' => TaxonomyTerm::class,
     ];
 
@@ -28,13 +25,10 @@ class UserFormEmailRecipientExtension extends DataExtension
      */
     public function EmailTagsNice(): string
     {
-        $tags = $this->owner->EmailTags()->sort('Name');
+        $tags = $this->getOwner()->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
-        if (is_array($availableTags) && !empty($availableTags)) {
-            $terms = implode(", ", $availableTags);
-        } else {
-            $terms = "";
-        }
+        $terms = $availableTags === [] ? "" : implode(", ", $availableTags);
+
         return $terms;
     }
 
@@ -53,7 +47,7 @@ class UserFormEmailRecipientExtension extends DataExtension
     {
         parent::onAfterWrite();
         // After write, ensure terms associated are linked to the correct type
-        if ($terms = $this->owner->EmailTags()) {
+        if ($terms = $this->getOwner()->EmailTags()) {
             $type = NotificationTags::findOrMakeType();
             foreach ($terms as $term) {
                 $term->TypeID = $type->ID;
@@ -64,16 +58,15 @@ class UserFormEmailRecipientExtension extends DataExtension
 
     /**
      * Add tag field to Email recipient
-     * @param FieldList $fields
      */
     public function updateCmsFields(FieldList $fields)
     {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
-        $tag = trim(strip_tags(Config::inst()->get(ProjectTags::class, 'tag')));
+        $tag = trim(strip_tags((string) Config::inst()->get(ProjectTags::class, 'tag')));
         $description = "";
 
         if ($limit > 0) {
-            if ($tag) {
+            if ($tag !== '') {
                 $limit--;
                 $description = _t('Taggable.TAG_LIMIT_MULTIPLE_PLUS_PROJECT_TAG', '{limit} tag(s) are allowed, in addition to the system tag <code>{tag}</code>.', ['limit' => $limit, 'tag' => $tag]);
             } else {
@@ -91,7 +84,7 @@ class UserFormEmailRecipientExtension extends DataExtension
                 'EmailTags',
                 _t('Taggable.EMAIL_TAGS', 'Email tags'),
                 $availableTerms, // available terms
-                $this->owner->EmailTags()->sort('Name'), // current terms
+                $this->getOwner()->EmailTags()->sort('Name'), // current terms
                 'Name' // title field: TaxonomyTerm.Name
             )->setCanCreate($canCreate)
             ->setShouldLazyLoad(true)

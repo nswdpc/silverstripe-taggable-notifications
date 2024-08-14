@@ -25,6 +25,7 @@ class NotificationTags
             $type = TaxonomyType::create($record);
             $type->write();
         }
+
         return $type;
     }
 
@@ -34,10 +35,9 @@ class NotificationTags
     public static function getAvailableTerms(): DataList
     {
         $type = self::findOrMakeType();
-        $terms = TaxonomyTerm::get()
+        return TaxonomyTerm::get()
                     ->filter(['TypeID' => $type->ID ])
                     ->sort('Name ASC');
-        return $terms;
     }
 
     /**
@@ -49,6 +49,7 @@ class NotificationTags
         if ($terms->count() == 0) {
             return [];
         }
+
         $availableTerms = self::getAvailableTerms();
         if ($availableTerms->count() > 0) {
             // filter on these term(s)
@@ -58,6 +59,7 @@ class NotificationTags
             // no available terms, none should be returned
             $terms = [];
         }
+
         return $terms;
     }
 }

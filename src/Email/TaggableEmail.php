@@ -19,9 +19,8 @@ class TaggableEmail extends Email
     /**
      * Set tag headers on the email message, based on project configuration
      * Classing this method will set tags as headers on the SwiftMessage
-     * @return self
      */
-    public function setNotificationTags(array $tags)
+    public function setNotificationTags(array $tags): static
     {
         $this->setTaggableNotificationTags($tags);
 
@@ -34,13 +33,13 @@ class TaggableEmail extends Email
 
         // The header configured must be X- prefixe
         // avoids stomping standard headers
-        if (stripos($headerName, "X-") !== 0) {
+        if (stripos((string) $headerName, "X-") !== 0) {
             return $this;
         }
 
         // get notification tags already set, if any
         $tags = $this->getNotificationTags();
-        if (empty($tags)) {
+        if ($tags === []) {
             return $this;
         }
 
@@ -55,6 +54,7 @@ class TaggableEmail extends Email
                 if ($delimiter === '') {
                     $delimiter = ",";
                 }
+
                 $this->getSwiftMessage()->getHeaders()->addTextHeader($headerName, implode($delimiter, $tags));
                 break;
             default:
@@ -71,6 +71,7 @@ class TaggableEmail extends Email
                     // set at this index
                     $this->getSwiftMessage()->getHeaders()->set($header, $index);
                 }
+
                 break;
         }
 
