@@ -13,14 +13,16 @@
     "authors": [
         {
             "name": "James Ellis",
-            "homepage": "https://dpc.nsw.gov.au",
             "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
             "NSWDPC\\Messaging\\Taggable\\": [
-                "src/"
+                "src/Email/",
+                "src/Extensions/",
+                "src/Models/",
+                "src/Traits/"
             ],
             "NSWDPC\\Messaging\\Taggable\\Tests\\": [
                 "tests/"
@@ -36,7 +38,26 @@
         "silverstripe/userforms" : "Install this module to get tagging of notifications from a user form"
     },
     "require-dev": {
+        "cambis/silverstripe-rector": "^0.5.1",
         "phpunit/phpunit": "^9.5",
-        "friendsofphp/php-cs-fixer": "^3"
-    }
+        "syntro/silverstripe-phpstan": "^1",
+        "nswdpc/ci-files": "dev-v-1"
+    },
+    "repositories": [
+        {
+        "type": "git",
+        "url": "https://github.com/nswdpc/ci-files.git"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "php-http/discovery": true,
+            "silverstripe/vendor-plugin": true,
+            "silverstripe/recipe-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }

@@ -10,21 +10,25 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * Extension for the {@link SilverStripe\UserForms\Control\UserDefinedFormController} to update email data prior to sending
  * @author James
  */
-class UserDefinedFormControllerExtension extends Extension {
-
+class UserDefinedFormControllerExtension extends Extension
+{
     use Taggable;
 
     /**
      * Apply EmailTags to an email destined for an {@link SilverStripe\UserForms\Model\Recipient\EmailRecipient}
      */
-    public function updateEmail( Email $email, EmailRecipient $recipient, array $emailData) {
+    public function updateEmail(Email $email, EmailRecipient $recipient, array $emailData)
+    {
+        // @phpstan-ignore method.notFound
         $tags = $recipient->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
-        if(empty($availableTags)) {
+        if ($availableTags === []) {
             // no tags
             return;
         }
+
         // set tags and headers
-        $email->setNotificationTags( $availableTags );
+        /** @var \NSWDPC\Messaging\Taggable\TaggableEmail $email */
+        $email->setNotificationTags($availableTags);
     }
 }

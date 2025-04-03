@@ -1,4 +1,5 @@
 <?php
+
 namespace NSWDPC\Messaging\Taggable\Tests;
 
 use NSWDPC\Messaging\Taggable\ProjectTags;
@@ -9,12 +10,10 @@ use SilverStripe\Dev\SapphireTest;
 /**
  * Test TaggableEmail notification tag setting and processing
  */
-class TaggableEmailTest extends SapphireTest {
-
-
-
-    public function testSetNotificationTags() {
-
+class TaggableEmailTest extends SapphireTest
+{
+    public function testSetNotificationTags(): void
+    {
         $headerName = 'X-Tag-Testing';
 
         ProjectTags::config()->set('tag_limit', 0);// unlimited tags
@@ -50,17 +49,16 @@ class TaggableEmailTest extends SapphireTest {
         $this->assertTrue($headers->has($headerName));
         $headerSet = $headers->getAll($headerName);
 
-        $this->assertEquals( count($tags), count($headerSet) );
+        $this->assertEquals(count($tags), count($headerSet));
 
-        foreach($headerSet as $header) {
+        foreach ($headerSet as $header) {
             $value = $header->getValue();
             $this->assertContains($value, $tags);
         }
-
     }
 
-    public function testTagLimit() {
-
+    public function testTagLimit(): void
+    {
         $headerName = 'X-Tag-Testing';
         $tagLimit = 2;
 
@@ -90,24 +88,23 @@ class TaggableEmailTest extends SapphireTest {
 
         $storedTags = $email->getNotificationTags();
 
-        $this->assertEquals($tagLimit, count($storedTags) );
+        $this->assertEquals($tagLimit, count($storedTags));
 
         $headers = $email->getSwiftMessage()->getHeaders();
 
         $this->assertTrue($headers->has($headerName));
         $headerSet = $headers->getAll($headerName);
 
-        $this->assertEquals( count($storedTags), count($headerSet) );
+        $this->assertEquals(count($storedTags), count($headerSet));
 
-        foreach($headerSet as $header) {
+        foreach ($headerSet as $header) {
             $value = $header->getValue();
             $this->assertContains($value, $storedTags);
         }
-
     }
 
-    public function testJsonSerialisedTags() {
-
+    public function testJsonSerialisedTags(): void
+    {
         $headerName = 'X-Tag-Testing';
 
 
@@ -145,12 +142,11 @@ class TaggableEmailTest extends SapphireTest {
         $this->assertTrue($headers->has($headerName));
         $header = $headers->get($headerName);
 
-        $this->assertEquals( count($tags), count( json_decode( $header->getValue() ) ) );
-
+        $this->assertEquals(count($tags), count(json_decode((string) $header->getValue())));
     }
 
-    public function testCsvSerialisedTags() {
-
+    public function testCsvSerialisedTags(): void
+    {
         $headerName = 'X-Tag-Testing';
 
 
@@ -188,12 +184,11 @@ class TaggableEmailTest extends SapphireTest {
         $this->assertTrue($headers->has($headerName));
         $header = $headers->get($headerName);
 
-        $this->assertEquals( count($tags), count( explode(",", $header->getValue() ) ) );
-
+        $this->assertEquals(count($tags), count(explode(",", (string) $header->getValue())));
     }
 
-    public function testProjectNotificationTags() {
-
+    public function testProjectNotificationTags(): void
+    {
         $headerName = 'X-Tag-Testing';
         $projectTag = 'test project tag';
 
@@ -220,7 +215,7 @@ class TaggableEmailTest extends SapphireTest {
             'tag four'
         ];
 
-        $allExpectedTags = array_merge([ $projectTag ], $tags );
+        $allExpectedTags = array_merge([ $projectTag ], $tags);
 
         $email = $email->setNotificationTags($tags);
 
@@ -234,13 +229,11 @@ class TaggableEmailTest extends SapphireTest {
         $headerSet = $headers->getAll($headerName);
 
         // tags + project tag
-        $this->assertEquals( count($allExpectedTags), count($headerSet) );
+        $this->assertEquals(count($allExpectedTags), count($headerSet));
 
-        foreach($headerSet as $header) {
+        foreach ($headerSet as $header) {
             $value = $header->getValue();
             $this->assertContains($value, $allExpectedTags);
         }
-
     }
-
 }
