@@ -56,7 +56,7 @@ class TaggableEmail extends Email
                 }
                 array_walk(
                     $tags,
-                    function(&$value, $key) use ($delimiter) {
+                    function (&$value, $key) use ($delimiter) {
                         $value = trim(str_replace($delimiter, "", $value));
                     }
                 );

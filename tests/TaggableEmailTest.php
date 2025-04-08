@@ -12,7 +12,6 @@ use SilverStripe\Dev\SapphireTest;
  */
 class TaggableEmailTest extends SapphireTest
 {
-
     public function testSetNotificationTags(): void
     {
         $headerName = 'X-Tag-Testing';
