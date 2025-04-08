@@ -244,4 +244,47 @@ class TaggableEmailTest extends SapphireTest
 
         $this->assertEquals(count($allExpectedTags), $c);
     }
+
+    public function testCsvSerialisedTagsWithDelimiterStripped(): void
+    {
+        $headerName = 'X-Tag-Testing';
+        $delimiter = ",";
+
+        ProjectTags::config()->set('tag_email_header_serialisation', ProjectTags::HEADER_SERIALISATION_CSV);
+        ProjectTags::config()->set('tag_limit', 0);// unlimited tags
+        ProjectTags::config()->set('tag_email_header_name', $headerName);
+        ProjectTags::config()->set('tag_email_header_value_delimiter', $delimiter);
+
+        $from = "from@example.com";
+        $to = "to@example.com";
+        $subject = "test set notification tags";
+        $body = "<p>Email body<p>";
+
+        $email = TaggableEmail::create(
+            $from,
+            $to,
+            $subject,
+            $body
+        );
+
+        $tags = [
+            "tag {$delimiter}one",
+            "tag {$delimiter}two",
+            "tag {$delimiter}three",
+            "tag {$delimiter}four",
+        ];
+
+        $email = $email->setNotificationTags($tags);
+
+        $storedTags = $email->getNotificationTags();
+
+        $this->assertEquals($tags, $storedTags);
+
+        $headers = $email->getHeaders();
+
+        $this->assertTrue($headers->has($headerName));
+        $header = $headers->get($headerName);
+
+        $this->assertEquals(count($tags), count(explode(",", (string) $header->getValue())));
+    }
 }

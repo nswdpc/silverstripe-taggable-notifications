@@ -54,6 +54,12 @@ class TaggableEmail extends Email
                 if ($delimiter === '') {
                     $delimiter = ",";
                 }
+                array_walk(
+                    $tags,
+                    function(&$value, $key) use ($delimiter) {
+                        $value = trim(str_replace($delimiter, "", $value));
+                    }
+                );
                 $this->getHeaders()->addTextHeader($headerName, implode($delimiter, $tags));
                 break;
             default:
