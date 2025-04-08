@@ -145,6 +145,8 @@ class TaggableEmailTest extends SapphireTest
         $headers = $email->getHeaders();
 
         $this->assertTrue($headers->has($headerName));
+
+        /** @var \Symfony\Component\Mime\Header\UnstructuredHeader $header */
         $header = $headers->get($headerName);
 
         $this->assertEquals(count($tags), count(json_decode((string) $header->getValue())));
@@ -187,6 +189,8 @@ class TaggableEmailTest extends SapphireTest
         $headers = $email->getHeaders();
 
         $this->assertTrue($headers->has($headerName));
+
+        /** @var \Symfony\Component\Mime\Header\UnstructuredHeader $header */
         $header = $headers->get($headerName);
 
         $this->assertEquals(count($tags), count(explode(",", (string) $header->getValue())));
@@ -282,6 +286,7 @@ class TaggableEmailTest extends SapphireTest
         $headers = $email->getHeaders();
 
         $this->assertTrue($headers->has($headerName));
+        /** @var \Symfony\Component\Mime\Header\UnstructuredHeader $header */
         $header = $headers->get($headerName);
 
         $this->assertEquals(count($tags), count(explode(",", (string) $header->getValue())));

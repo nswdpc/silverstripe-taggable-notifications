@@ -17,6 +17,7 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
 class UserFormEmailTagsExtension extends DataExtension
 {
     private static array $belongs_many_many = [
+        // @phpstan-ignore class.notFound
         'Recipients' => EmailRecipient::class,
     ];
 
