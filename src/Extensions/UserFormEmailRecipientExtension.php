@@ -13,6 +13,8 @@ use SilverStripe\Taxonomy\TaxonomyType;
  * Decorate a userdefined form recipient with notification tags
  * Each tag is a link to a {@link SilverStripe\Taxonomy\TaxonomyTerm} record
  * @author James
+ * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> EmailTags()
+ * @extends \SilverStripe\ORM\DataExtension<static>
  */
 class UserFormEmailRecipientExtension extends DataExtension
 {
@@ -34,6 +36,7 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function updateSummaryFields(&$fields)
     {
         $fields['EmailTagsNice'] = _t('Taggable.EMAIL_TAGS', 'Email tags');
@@ -42,6 +45,7 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * EmailRecipient post-write operations
      */
+    #[\Override]
     public function onAfterWrite()
     {
         parent::onAfterWrite();
@@ -58,6 +62,7 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * Add tag field to Email recipient
      */
+    #[\Override]
     public function updateCmsFields(FieldList $fields)
     {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));

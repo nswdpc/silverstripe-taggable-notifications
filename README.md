@@ -13,27 +13,22 @@ Depending on the service used, message tags be be used for message analytics, bo
 
 ## Requirements
 
-There are no special requirements for using this module beyond the composer requirements and the configuration required for your notification service.
+There are no special requirements for using this module beyond the composer requirements and [a configuration](./docs/en/001_index.md) required for your notification service.
 
 To set tags on a notification that uses the Taggable trait:
 
 ```php
+$message = \My\App::getNotificationMessage($name, $number);
 $tags = ['tag1','tag2','tag3'];
-$notifier->setNotificationTags( $tags );
+$message->setNotificationTags( $tags );
+$message->deliver();
 ```
 
-For the core `Email` class, [configuration in the module](./_config/config.yml) sets `TaggableEmail` as the Email class, via Injector.
+### Email
 
-```php
-$email = Injector::inst()->get( Email::class );
-$email->setNotificationTags( $tags );
-```
+See the [Email section](./docs/en/001_index.md) for email configuration and examples.
 
-TaggableEmail will set headers on the `Swift_Message` based on your configuration.
-
-If your project uses a different email provider that supports tagging, it just needs to use the Taggable trait. Some examples exist [in the documentation](./docs/en/001_index.md).
-
-## User forms
+#### User forms
 
 If your project uses userforms, each Email recipient will get a tag field allowing per-recipient message tagging.
 
@@ -51,25 +46,9 @@ composer require silverstripe-taggable-notifications
 
 * [Documentation](./docs/en/001_index.md)
 
-## Configuration
-
-Add a project level tag. If provided, this is added to all notifications sent by the service.
-
-```yaml
----
-Name: app-notification-tagging
-After:
-  - '#nswdpc-taggable-notifications'
----
-NSWDPC\Messaging\Taggable\ProjectTags:
- tag: 'a-project-tag'
-```
-
 ## Maintainers
 
-+ [dpcdigital@NSWDPC:~$](https://dpc.nsw.gov.au)
-
-> Add additional maintainers here and/or include [authors in composer](https://getcomposer.org/doc/04-schema.md#authors)
++ PD Web Team
 
 ## Bugtracker
 
