@@ -13,6 +13,8 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * Each term can be linked to multiple recipients and
  * one configured {@link SilverStripe\Taxonomy\TaxonomyType}
  * @author James
+ * @method \SilverStripe\ORM\ManyManyList<mixed> Recipients()
+ * @extends \SilverStripe\ORM\DataExtension<static>
  */
 class UserFormEmailTagsExtension extends DataExtension
 {
@@ -42,6 +44,7 @@ class UserFormEmailTagsExtension extends DataExtension
     /**
      * Do not show the Recipients tab in Taxonomy admin
      */
+    #[\Override]
     public function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName('Recipients');

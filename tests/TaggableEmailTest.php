@@ -105,6 +105,7 @@ class TaggableEmailTest extends SapphireTest
             $value = $header->getValue();
             $this->assertContains($value, $storedTags);
         }
+
         $this->assertEquals($tagLimit, $c);
     }
 

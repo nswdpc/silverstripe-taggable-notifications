@@ -54,9 +54,10 @@ class TaggableEmail extends Email
                 if ($delimiter === '') {
                     $delimiter = ",";
                 }
+
                 array_walk(
                     $tags,
-                    function (&$value, $key) use ($delimiter) {
+                    function (&$value, $key) use ($delimiter): void {
                         $value = trim(str_replace($delimiter, "", $value));
                     }
                 );
@@ -67,6 +68,7 @@ class TaggableEmail extends Email
                 foreach ($tags as $tag) {
                     $this->getHeaders()->addTextHeader($headerName, $tag);
                 }
+
                 break;
         }
 

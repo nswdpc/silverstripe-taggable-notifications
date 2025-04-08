@@ -9,6 +9,7 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
 /**
  * Extension for the {@link SilverStripe\UserForms\Control\UserDefinedFormController} to update email data prior to sending
  * @author James
+ * @extends \SilverStripe\Core\Extension<static>
  */
 class UserDefinedFormControllerExtension extends Extension
 {
