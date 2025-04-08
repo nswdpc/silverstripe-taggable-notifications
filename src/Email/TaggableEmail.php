@@ -46,7 +46,7 @@ class TaggableEmail extends Email
         $serialiser = Config::inst()->get(ProjectTags::class, 'tag_email_header_serialisation');
         switch ($serialiser) {
             case ProjectTags::HEADER_SERIALISATION_JSON:
-                $this->getSwiftMessage()->getHeaders()->addTextHeader($headerName, json_encode($tags));
+                $this->getHeaders()->addTextHeader($headerName, json_encode($tags));
                 break;
             case ProjectTags::HEADER_SERIALISATION_CSV:
                 // Get delimited or fall back to ,
@@ -54,24 +54,19 @@ class TaggableEmail extends Email
                 if ($delimiter === '') {
                     $delimiter = ",";
                 }
-
-                $this->getSwiftMessage()->getHeaders()->addTextHeader($headerName, implode($delimiter, $tags));
+                array_walk(
+                    $tags,
+                    function(&$value, $key) use ($delimiter) {
+                        $value = trim(str_replace($delimiter, "", $value));
+                    }
+                );
+                $this->getHeaders()->addTextHeader($headerName, implode($delimiter, $tags));
                 break;
             default:
-                // need to set a header with an index
-                $factory = new \Swift_Mime_SimpleHeaderFactory(
-                    new \Swift_Mime_HeaderEncoder_Base64HeaderEncoder(),
-                    new \Swift_Encoder_Base64Encoder(),
-                    new EmailValidator()
-                );
                 // each tag
-                foreach ($tags as $index => $tag) {
-                    // create a header
-                    $header = $factory->createTextHeader($headerName, $tag);
-                    // set at this index
-                    $this->getSwiftMessage()->getHeaders()->set($header, $index);
+                foreach ($tags as $tag) {
+                    $this->getHeaders()->addTextHeader($headerName, $tag);
                 }
-
                 break;
         }
 
