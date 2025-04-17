@@ -23,7 +23,7 @@ class UserDefinedFormControllerExtension extends Extension
     {
 
         // Bail if the $email instance doesn't support tagging
-        if(!($email instanceof TaggableEmail)) {
+        if (!($email instanceof TaggableEmail)) {
             return;
         }
 
