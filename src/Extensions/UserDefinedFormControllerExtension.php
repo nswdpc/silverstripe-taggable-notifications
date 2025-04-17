@@ -21,6 +21,12 @@ class UserDefinedFormControllerExtension extends Extension
      */
     public function updateEmail(Email $email, EmailRecipient $recipient, array $emailData)
     {
+
+        // Bail if the $email instance doesn't support tagging
+        if(!($email instanceof TaggableEmail)) {
+            return;
+        }
+
         // @phpstan-ignore class.notFound
         $tags = $recipient->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
