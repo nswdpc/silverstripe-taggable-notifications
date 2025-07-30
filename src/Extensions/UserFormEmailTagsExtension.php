@@ -12,10 +12,9 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * Each term can be linked to multiple recipients and
  * one configured {@link SilverStripe\Taxonomy\TaxonomyType}
  * @author James
- * @extends \SilverStripe\ORM\DataExtension<static>
+ * @extends \SilverStripe\Core\Extension<static>
  * Ingore required as userforms is optional requirement
  * @method \SilverStripe\ORM\ManyManyList<mixed> Recipients() // @phpstan-ignore class.notFound, generics.notSubtype
- * @extends \SilverStripe\Core\Extension<static>
  */
 class UserFormEmailTagsExtension extends Extension
 {
