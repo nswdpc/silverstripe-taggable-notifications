@@ -7,7 +7,6 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\TagField\TagField;
 use SilverStripe\Taxonomy\TaxonomyTerm;
-use SilverStripe\Taxonomy\TaxonomyType;
 
 /**
  * Decorate a userdefined form recipient with notification tags

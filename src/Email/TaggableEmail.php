@@ -2,7 +2,6 @@
 
 namespace NSWDPC\Messaging\Taggable;
 
-use Egulias\EmailValidator\EmailValidator;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Control\Email\Email;
 

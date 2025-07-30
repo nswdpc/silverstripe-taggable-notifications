@@ -4,7 +4,6 @@ namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\Taxonomy\TaxonomyTerm;
 use SilverStripe\Taxonomy\TaxonomyType;
 use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
 
