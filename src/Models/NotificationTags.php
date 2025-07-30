@@ -3,7 +3,6 @@
 namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\ORM\DataList;
-use SilverStripe\ORM\SS_List;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 use SilverStripe\Taxonomy\TaxonomyType;
 
