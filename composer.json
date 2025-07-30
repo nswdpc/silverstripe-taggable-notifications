@@ -30,16 +30,16 @@
         }
     },
     "require": {
-        "silverstripe/framework" : "^5",
-        "silverstripe/tagfield" : "^3",
-        "silverstripe/taxonomy" : "^3"
+        "silverstripe/framework" : "^6",
+        "silverstripe/tagfield" : "^4",
+        "silverstripe/taxonomy" : "^4"
     },
     "suggest" : {
         "silverstripe/userforms" : "Install this module to get tagging of notifications from a user form"
     },
     "require-dev": {
         "cambis/silverstripe-rector": "^2",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^11.5",
         "cambis/silverstan": "^2",
         "nswdpc/ci-files": "dev-v-4",
         "friendsofphp/php-cs-fixer": "^3",
