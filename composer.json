@@ -38,17 +38,15 @@
         "silverstripe/userforms" : "Install this module to get tagging of notifications from a user form"
     },
     "require-dev": {
-        "cambis/silverstripe-rector": "^1",
+        "cambis/silverstripe-rector": "^2",
         "phpunit/phpunit": "^9.5",
-        "cambis/silverstan": "^1",
-        "nswdpc/ci-files": "dev-v-3"
+        "cambis/silverstan": "^2",
+        "nswdpc/ci-files": "dev-v-4",
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpstan/phpstan": "^2",
+        "phpstan/phpstan-phpunit": "^2",
+        "rector/rector": "^2"
     },
-    "repositories": [
-        {
-        "type": "git",
-        "url": "https://github.com/nswdpc/ci-files.git"
-        }
-    ],
     "config": {
         "allow-plugins": {
             "composer/installers": true,
