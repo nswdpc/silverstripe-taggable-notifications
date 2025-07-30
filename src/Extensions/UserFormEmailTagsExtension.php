@@ -3,7 +3,7 @@
 namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\Taxonomy\TaxonomyType;
 use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
 
@@ -16,7 +16,7 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * Ingore required as userforms is optional requirement
  * @method \SilverStripe\ORM\ManyManyList<mixed> Recipients() // @phpstan-ignore class.notFound, generics.notSubtype
  */
-class UserFormEmailTagsExtension extends DataExtension
+class UserFormEmailTagsExtension extends Extension
 {
     private static array $belongs_many_many = [
         // @phpstan-ignore class.notFound
@@ -44,7 +44,6 @@ class UserFormEmailTagsExtension extends DataExtension
     /**
      * Do not show the Recipients tab in Taxonomy admin
      */
-    #[\Override]
     public function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName('Recipients');

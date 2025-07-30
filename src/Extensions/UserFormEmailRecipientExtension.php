@@ -4,7 +4,7 @@ namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\TagField\TagField;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 
@@ -15,7 +15,7 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> EmailTags()
  * @extends \SilverStripe\ORM\DataExtension<static>
  */
-class UserFormEmailRecipientExtension extends DataExtension
+class UserFormEmailRecipientExtension extends Extension
 {
     private static array $many_many = [
         'EmailTags' => TaxonomyTerm::class,
@@ -35,7 +35,6 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * @inheritdoc
      */
-    #[\Override]
     public function updateSummaryFields(&$fields)
     {
         $fields['EmailTagsNice'] = _t('Taggable.EMAIL_TAGS', 'Email tags');
@@ -44,10 +43,8 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * EmailRecipient post-write operations
      */
-    #[\Override]
     public function onAfterWrite()
     {
-        parent::onAfterWrite();
         // After write, ensure terms associated are linked to the correct type
         if ($terms = $this->getOwner()->EmailTags()) {
             $type = NotificationTags::findOrMakeType();
@@ -61,7 +58,6 @@ class UserFormEmailRecipientExtension extends DataExtension
     /**
      * Add tag field to Email recipient
      */
-    #[\Override]
     public function updateCmsFields(FieldList $fields)
     {
         $limit = intval(Config::inst()->get(ProjectTags::class, 'tag_limit'));
