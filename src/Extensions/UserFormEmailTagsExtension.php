@@ -15,6 +15,7 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * @extends \SilverStripe\ORM\DataExtension<static>
  * Ingore required as userforms is optional requirement
  * @method \SilverStripe\ORM\ManyManyList<mixed> Recipients() // @phpstan-ignore class.notFound, generics.notSubtype
+ * @extends \SilverStripe\Core\Extension<static>
  */
 class UserFormEmailTagsExtension extends Extension
 {

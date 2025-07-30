@@ -14,6 +14,7 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
  * @author James
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> EmailTags()
  * @extends \SilverStripe\ORM\DataExtension<static>
+ * @extends \SilverStripe\Core\Extension<static>
  */
 class UserFormEmailRecipientExtension extends Extension
 {
@@ -35,7 +36,7 @@ class UserFormEmailRecipientExtension extends Extension
     /**
      * @inheritdoc
      */
-    public function updateSummaryFields(&$fields)
+    public function updateSummaryFields(array &$fields)
     {
         $fields['EmailTagsNice'] = _t('Taggable.EMAIL_TAGS', 'Email tags');
     }
