@@ -30,7 +30,7 @@ class UserFormEmailRecipientExtension extends DataExtension
         $tags = $this->getOwner()->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
 
-        return $availableTags === [] ? "" : implode(", ", $availableTags);
+        return implode(", ", $availableTags);
     }
 
     /**
