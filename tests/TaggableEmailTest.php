@@ -4,7 +4,6 @@ namespace NSWDPC\Messaging\Taggable\Tests;
 
 use NSWDPC\Messaging\Taggable\ProjectTags;
 use NSWDPC\Messaging\Taggable\TaggableEmail;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 
 /**

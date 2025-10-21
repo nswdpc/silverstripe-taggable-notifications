@@ -7,7 +7,7 @@ namespace NSWDPC\Messaging\Taggable;
  * to provide custom parameter handling for a {@link \SilverStripe\Control\Email\Mailer}
  *
  * @author James
- *
+ * @phpstan-ignore trait.unused
  */
 trait CustomParameters
 {

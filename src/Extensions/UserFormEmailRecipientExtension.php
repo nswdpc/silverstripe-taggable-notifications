@@ -7,7 +7,6 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\TagField\TagField;
 use SilverStripe\Taxonomy\TaxonomyTerm;
-use SilverStripe\Taxonomy\TaxonomyType;
 
 /**
  * Decorate a userdefined form recipient with notification tags
@@ -30,7 +29,7 @@ class UserFormEmailRecipientExtension extends DataExtension
         $tags = $this->getOwner()->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
 
-        return $availableTags === [] ? "" : implode(", ", $availableTags);
+        return implode(", ", $availableTags);
     }
 
     /**
