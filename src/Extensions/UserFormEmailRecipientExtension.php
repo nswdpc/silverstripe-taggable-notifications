@@ -13,7 +13,7 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
  * Each tag is a link to a {@link SilverStripe\Taxonomy\TaxonomyTerm} record
  * @author James
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> EmailTags()
- * @extends \SilverStripe\Core\Extension<static>
+ * @extends \SilverStripe\Core\Extension<(\SilverStripe\UserForms\Model\Recipient\EmailRecipient & static)>
  */
 class UserFormEmailRecipientExtension extends Extension
 {

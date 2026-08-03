@@ -14,7 +14,8 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * Each term can be linked to multiple recipients and
  * one configured {@link SilverStripe\Taxonomy\TaxonomyType}
  * @author James
- * @extends \SilverStripe\Core\Extension<static>
+ * @extends \SilverStripe\Core\Extension<(\SilverStripe\Taxonomy\TaxonomyTerm & static)>
+ * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\UserForms\Model\Recipient\EmailRecipient> Recipients()
  */
 class UserFormEmailTagsExtension extends Extension
 {
