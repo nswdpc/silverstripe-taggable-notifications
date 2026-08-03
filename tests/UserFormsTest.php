@@ -32,6 +32,7 @@ class UserFormsTest extends SapphireTest
             ]);
             $terms[$tag]->write();
         }
+
         $emailRecipient = EmailRecipient::create([
             'EmailAddress' => 'someone@example.com',
             'EmailSubject' => 'test email',
@@ -66,6 +67,7 @@ class UserFormsTest extends SapphireTest
             ]);
             $terms[$tag]->write();
         }
+
         $emailRecipient = EmailRecipient::create([
             'EmailAddress' => 'userform@example.com',
             'EmailSubject' => 'test userform email recipient',
