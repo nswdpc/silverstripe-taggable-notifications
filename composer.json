@@ -45,7 +45,8 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpstan/phpstan": "^2",
         "phpstan/phpstan-phpunit": "^2",
-        "rector/rector": "^2"
+        "rector/rector": "^2",
+        "silverstripe/userforms": "^7"
     },
     "config": {
         "allow-plugins": {

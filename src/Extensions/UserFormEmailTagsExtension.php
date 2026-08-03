@@ -15,13 +15,10 @@ use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
  * one configured {@link SilverStripe\Taxonomy\TaxonomyType}
  * @author James
  * @extends \SilverStripe\Core\Extension<static>
- * Ingore required as userforms is optional requirement
- * @method \SilverStripe\ORM\ManyManyList<mixed> Recipients() // @phpstan-ignore class.notFound, generics.notSubtype
  */
 class UserFormEmailTagsExtension extends Extension
 {
     private static array $belongs_many_many = [
-        // @phpstan-ignore class.notFound
         'Recipients' => EmailRecipient::class,
     ];
 

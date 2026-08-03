@@ -17,7 +17,6 @@ class UserDefinedFormControllerExtension extends Extension
 
     /**
      * Apply EmailTags to an email destined for an {@link SilverStripe\UserForms\Model\Recipient\EmailRecipient}
-     * @phpstan-ignore class.notFound
      */
     public function updateEmail(Email $email, EmailRecipient $recipient, array $emailData)
     {
@@ -27,7 +26,6 @@ class UserDefinedFormControllerExtension extends Extension
             return;
         }
 
-        // @phpstan-ignore class.notFound
         $tags = $recipient->EmailTags()->sort('Name');
         $availableTags = NotificationTags::filterTermsByAvailable($tags);
         if ($availableTags === []) {
