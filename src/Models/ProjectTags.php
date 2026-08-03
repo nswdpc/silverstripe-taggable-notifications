@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\Core\Config\Configurable;
