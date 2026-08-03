@@ -3,7 +3,6 @@
 namespace NSWDPC\Messaging\Taggable;
 
 use SilverStripe\ORM\DataList;
-use SilverStripe\ORM\SS_List;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 use SilverStripe\Taxonomy\TaxonomyType;
 
@@ -44,7 +43,7 @@ class NotificationTags
      * Given a list of TaxonomyTerm records, filter them by the Terms that are available as notification terms
      * @param \SilverStripe\ORM\DataList|\SilverStripe\ORM\UnsavedRelationList $terms
      */
-    public static function filterTermsByAvailable(SS_List $terms): array
+    public static function filterTermsByAvailable(\SilverStripe\Model\List\SS_List $terms): array
     {
         if ($terms->count() == 0) {
             return [];
