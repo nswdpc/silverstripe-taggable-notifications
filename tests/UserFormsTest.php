@@ -2,21 +2,18 @@
 
 namespace NSWDPC\Messaging\Taggable\Tests;
 
-use NSWDPC\Messaging\Taggable\ProjectTags;
 use NSWDPC\Messaging\Taggable\TaggableEmail;
 use NSWDPC\Messaging\Taggable\NotificationTags;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\UserForms\Control\UserDefinedFormController;
 use SilverStripe\UserForms\Model\Recipient\EmailRecipient;
 use SilverStripe\Taxonomy\TaxonomyTerm;
-use SilverStripe\Taxonomy\TaxonomyType;
 
 /**
  * Test userforms extensions
  */
 class UserFormsTest extends SapphireTest
 {
-
     protected $usesDatabase = true;
 
 
@@ -25,7 +22,7 @@ class UserFormsTest extends SapphireTest
         $type = NotificationTags::findOrMakeType();
         $tags = ['tag1','tag2','tag3'];
         $terms = [];
-        foreach($tags as $tag) {
+        foreach ($tags as $tag) {
             $terms[$tag] = TaxonomyTerm::create([
                 'Name' => $tag,
                 'TypeID' => $type->ID
@@ -60,7 +57,7 @@ class UserFormsTest extends SapphireTest
         $type = NotificationTags::findOrMakeType();
         $tags = ['userform1','userform2','userform3'];
         $terms = [];
-        foreach($tags as $tag) {
+        foreach ($tags as $tag) {
             $terms[$tag] = TaxonomyTerm::create([
                 'Name' => $tag,
                 'TypeID' => $type->ID
